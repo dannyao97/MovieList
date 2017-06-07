@@ -1,0 +1,8 @@
+
+1. Model -> Modal in notifyDlg
+2. register.html -> email and first name the same
+3. filter -> params.length when params is undefined in chsapp
+4. Go to login screen when user doesnt want to autologin after register
+5. Btn variable not passed in close() function in notifyDlg
+6. Set scope.parent.user to scope user in register controller
+7. New conversation button didnt have ng-click

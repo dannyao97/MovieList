@@ -1,0 +1,12 @@
+<h2>Conversations</h2>
+<div class="list-group">
+   <div class="list-group-item" ng-repeat="cnv in cnvs">
+      <cnv-summary to-summarize="cnv" show="user && user.id === cnv.ownerId"
+      edit="editCnv($index)" del="delCnv($index)">
+      </cnv-summary>
+   </div>
+</div>
+
+<button class="btn btn-primary" type="button" style="margin-top:5px" ng-click="newCnv()">
+   New Conversation
+</button>
