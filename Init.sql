@@ -24,17 +24,29 @@ create table MovieList (
    ownerId int
 );
 
+create table Movie (
+   id integer auto_increment primary key,
+   director varchar(50),
+   duration integer,
+   genre varchar(50),
+   title  varchar(50) not null,
+   movieLink varchar(75),
+   language varchar(20),
+   rating varchar(10),
+   year integer,
+   imdbScore float
+);
+
 create table Entry (
    id int auto_increment primary key,
    listId int not null,
    movieId int not null,
    prsId int not null,
    whenAdded datetime not null,
-   # constraint FKEntry_movieId foreign key (movieId) references Movie(id)
-    # on delete cascade,
+   constraint FKEntry_movieId foreign key (movieId) references Movie(id)
+    on delete cascade,
    constraint FKEntry_prsId foreign key (prsId) references Person(id)
     on delete cascade
 );
 
-source movie_setup.sql;
 source movies.sql;

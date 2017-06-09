@@ -43,6 +43,7 @@ app.use('/Prss', require('./Routes/Account/Prss'));
 app.use('/Ssns', require('./Routes/Account/Ssns'));
 app.use('/Lists', require('./Routes/MovieList/Lists.js'));
 app.use('/Entry', require('./Routes/MovieList/Entry.js'));
+app.use('/Movies', require('./Routes/MovieList/Movies.js'));
 
 // Special debugging route for /DB DELETE.  Clears all table contents,
 // resets all auto_increment keys to start at 1, and reinserts one admin user.

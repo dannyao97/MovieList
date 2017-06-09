@@ -67,7 +67,7 @@ Validator.prototype.chain = function(test, tag, params) {
 
 Validator.prototype.checkAdmin = function(cb) {
    return this.check(this.session && this.session.isAdmin(),
-   Validator.Tags.noPermission, null, cb);
+    Validator.Tags.noPermission, null, cb);
 };
 
 // Validate that AU is the specified person or is an admin
@@ -82,8 +82,9 @@ Validator.prototype.hasFields = function(obj, fieldList, cb) {
    var self = this;
 
    fieldList.forEach(function(name) {
-      self.chain(obj.hasOwnProperty(name), Validator.Tags.missingField,
-       [name]);
+      self.chain(obj.hasOwnProperty(name) && obj[name] !== "" &&
+       obj[name] !== null && obj[name] !== undefined,
+       Validator.Tags.missingField, [name]);
    });
    return this.check(true, null, null, cb);
 };
