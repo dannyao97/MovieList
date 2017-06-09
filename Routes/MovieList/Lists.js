@@ -17,6 +17,9 @@ router.get('/', function(req, res) {
             req.cnn.chkQry('select id, title from MovieList where ownerId = ?'
              , [qOwnerId], cb);
          }
+         else {
+            req.cnn.chkQry('select id, title from MovieList', null, cb);
+         }
       }
    },
    function(qRes, fields, cb) {
@@ -95,15 +98,17 @@ router.put('/:listId', function(req, res) {
       cnn.chkQry('select * from MovieList where id = ?', [listId], cb);
    },
    function(movLists, fields, cb) {
-      if (vld.checkPrsOK(movLists[0].ownerId, cb) &&
-       vld.check(movLists.length, Tags.notFound, null, cb)) {
+      if (vld.check(movLists.length, Tags.notFound, null, cb) &&
+       vld.checkPrsOK(movLists[0].ownerId, cb) &&
+       vld.chain(body.title.length <= 80, Tags.badValue, ["title"])
+       .check(movLists.length, Tags.notFound, null, cb)) {
          cnn.chkQry('select * from MovieList where id <> ? && title = ?',
           [listId, body.title], cb);
       }
    },
    function(sameTtl, fields, cb) {
       if (vld.check(!sameTtl.length, Tags.dupTitle, null, cb)) {
-         cnn.chkQry("update Conversation set title = ? where id = ?",
+         cnn.chkQry("update MovieList set title = ? where id = ?",
           [body.title, listId], cb);
       }
    },
@@ -117,22 +122,22 @@ router.put('/:listId', function(req, res) {
    });
 });
 
-/*
-router.delete('/:cnvId', function(req, res) {
+
+router.delete('/:listId', function(req, res) {
    var vld = req.validator;
-   var cnvId = req.params.cnvId;
+   var listId = req.params.listId;
    var cnn = req.cnn;
 
    async.waterfall([
    function(cb) {
       if (vld.checkPrsOK(req.session.id, cb)) {
-         cnn.chkQry('select * from Conversation where id = ?', [cnvId], cb);
+         cnn.chkQry('select * from MovieList where id = ?', [listId], cb);
       }
    },
    function(cnvs, fields, cb) {
       if (vld.check(cnvs.length, Tags.notFound, null, cb) &&
        vld.checkPrsOK(cnvs[0].ownerId, cb)) {
-         cnn.chkQry('delete from Conversation where id = ?', [cnvId], cb);
+         cnn.chkQry('delete from MovieList where id = ?', [listId], cb);
       }
    },
    function(dRes, fields, cb) {
@@ -145,25 +150,25 @@ router.delete('/:cnvId', function(req, res) {
    });
 });
 
-router.get('/:cnvId/Msgs', function(req, res) {
+router.get('/:listId/Entry', function(req, res) {
    var vld = req.validator;
-   var cnvId = req.params.cnvId;
+   var listId = req.params.listId;
    var cnn = req.cnn;
-   var query = 'select Message.id, whenMade, email, content from ' +
-    'Conversation c join Message on cnvId = c.id join Person p on ' +
-    'prsId = p.id where c.id = ? ';
-   var params = [parseInt(cnvId)];
+   var query = 'select Entry.id, whenAdded, firstName, lastName, movieId from ' +
+    'MovieList mv join Entry on listId = mv.id join Person p on ' +
+    'prsId = p.id where mv.id = ? ';
+   var params = [parseInt(listId)];
 
-   if (req.query.dateTime) {
-      query += 'and Message.whenMade < ?';
-      //offset in milliseconds
-      var tzoffset = (new Date()).getTimezoneOffset() * 60000;
-      var localISOTime = (new Date(parseInt(req.query.dateTime) - tzoffset))
-       .toISOString().slice(0, 19).replace('T', ' ');
-      params.push(localISOTime);
-   }
+   // if (req.query.dateTime) {
+   //    query += 'and Message.whenMade < ?';
+   //    //offset in milliseconds
+   //    var tzoffset = (new Date()).getTimezoneOffset() * 60000;
+   //    var localISOTime = (new Date(parseInt(req.query.dateTime) - tzoffset))
+   //     .toISOString().slice(0, 19).replace('T', ' ');
+   //    params.push(localISOTime);
+   // }
 
-   query += ' order by whenMade asc';
+   query += ' order by whenAdded asc';
    // And finally add a limit clause and parameter if indicated.
    if (req.query.num) {
       query += ' limit ?';
@@ -173,7 +178,7 @@ router.get('/:cnvId/Msgs', function(req, res) {
    async.waterfall([
    function(cb) {  // Check for existence of conversation
       if (vld.checkPrsOK(req.session.id, cb)) {
-         cnn.chkQry('select * from Conversation where id = ?', [cnvId], cb);
+         cnn.chkQry('select * from MovieList where id = ?', [listId], cb);
       }
    },
    function(cnvs, fields, cb) { // Get indicated messages
@@ -183,9 +188,9 @@ router.get('/:cnvId/Msgs', function(req, res) {
    },
    function(msgs, fields, cb) { // Return retrieved messages
       msgs.forEach(function(val) {
-         if (val.whenMade !== null) {
-            var newDate = new Date(val.whenMade).getTime();
-            val.whenMade = newDate;
+         if (val.whenAdded !== null) {
+            var newDate = new Date(val.whenAdded).getTime();
+            val.whenAdded = newDate;
          }
       });
       res.status(200).json(msgs);
@@ -196,39 +201,40 @@ router.get('/:cnvId/Msgs', function(req, res) {
    });
 });
 
-router.post('/:cnvId/Msgs', function(req, res){
+router.post('/:listId/Entry', function(req, res){
    var vld = req.validator;
    var cnn = req.cnn;
-   var cnvId = req.params.cnvId;
+   var listId = req.params.listId;
    var body = req.body;
    var curTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
    async.waterfall([
    function(cb) {
-      if (vld.hasFields(body, ['content'], cb) &&
-       vld.check(body.content.length <= 5000, Tags.badValue,
-       ['content'], cb)) {
-         cnn.chkQry('select * from Conversation where id = ?', [cnvId], cb);
+      if (vld.hasFields(body, ['movieId'], cb)) {
+         cnn.chkQry('select * from MovieList where id = ?', [listId], cb);
       }
    },
-   function(cnvs, fields, cb) {
-      if (vld.check(cnvs.length, Tags.notFound, null, cb)) {
-         cnn.chkQry('insert into Message set ?',
+   function(movies, fields, cb) {
+      if (vld.check(movies.length, Tags.notFound, null, cb)) {
+         cnn.chkQry('insert into Entry set ?',
          {
-            cnvId: cnvId, prsId: req.session.id,
-            whenMade: curTime, content: body.content
+            listId: listId, prsId: req.session.id,
+            whenAdded: curTime, movieId: body.movieId
          }, cb);
       }
-   },
-   function(insRes, fields, cb) {
-      cnn.chkQry("update Conversation set lastMessage = ? where id = ?",
-       [curTime, cnvId], cb);
       res.header("Content-Length", 0);
-      res.location('/Msgs/' + insRes.insertId).end();
-   }],
+      res.location('/Lists/' + movies.insertId).end();
+   },
+   // function(insRes, fields, cb) {
+   //    cnn.chkQry("update MovieList set lastMessage = ? where id = ?",
+   //     [curTime, listId], cb);
+   //    res.header("Content-Length", 0);
+   //    res.location('/Msgs/' + insRes.insertId).end();
+   // }
+   ],
    function(err) {
       cnn.release();
    });
-});*/
+});
 
 module.exports = router;
