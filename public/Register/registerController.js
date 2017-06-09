@@ -7,7 +7,7 @@ app.controller('registerController',
    $scope.errors = [];
 
    $scope.registerUser = function() {
-      $http.post("Prss", $scope.user)
+      $http.post("/Prss", $scope.user)
       .then(function() {
          return nDlg.show($scope, "Registration succeeded.  " +
           "Login automatically?", "Login", ["Yes", "No"]);
