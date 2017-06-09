@@ -14,10 +14,10 @@ app.controller('cnvOverviewController', ['$scope', '$state', '$http',
       }).result
       .then(function(newTitle) {
          selectedTitle = newTitle;
-         return $http.post("/Cnvs", {title: newTitle});
+         return $http.post("/Lists", {title: newTitle});
       })
       .then(function() {
-         return $http.get('/Cnvs');
+         return $http.get('/Lists');
       })
       .then(function(rsp) {
          $scope.cnvs = rsp.data;
@@ -38,10 +38,10 @@ app.controller('cnvOverviewController', ['$scope', '$state', '$http',
          "Delete Conversation", ["Yes", "No"])
       .then(function(btn) {
          if (btn === "Yes")
-            return $http.delete("/Cnvs/" + id, {title: delTitle});
+            return $http.delete("/Lists/" + id, {title: delTitle});
       })
       .then(function() {
-         return $http.get('/Cnvs');
+         return $http.get('/Lists');
       })
       .then(function(rsp) {
          $scope.cnvs = rsp.data;
@@ -58,10 +58,10 @@ app.controller('cnvOverviewController', ['$scope', '$state', '$http',
       }).result
       .then(function(newTitle) {
          selectedTitle = newTitle;
-         return $http.put("/Cnvs/" + id, {title: newTitle});
+         return $http.put("/Lists/" + id, {title: newTitle});
       })
       .then(function() {
-         return $http.get('/Cnvs');
+         return $http.get('/Lists');
       })
       .then(function(rsp) {
          $scope.cnvs = rsp.data;

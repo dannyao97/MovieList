@@ -74,9 +74,12 @@ app.directive('cnvDetail', [function() {
    return {
       restrict: 'E',
       scope: {
-         msg: '='
+         mov: '='
       },
-      template: '<div>{{msg.whenMade | date: "short"}} <b>|</b> ' +
-      '{{msg.email}} <b>|</b> {{msg.content}}</div>'
+      template: '<div class="background"> <span>{{mov.title}}' +
+         '<span class="minutes"><i>{{mov.duration}} minutes</i></span>' +
+         '<span class="language">{{mov.language}}</span> <br> </span>' +
+         '<span class="director_name"><b>{{mov.director}}</b></span>' +
+         '<span class="genre">{{mov.genre}}</span> </div>'
    }
 }]);

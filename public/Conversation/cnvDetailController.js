@@ -4,14 +4,18 @@ app.controller('cnvDetailController', ['$scope', '$state', '$http',
  function($scope, $state, $http, notifyDlg, $stateParams) {
    var id = $stateParams.cnvId;
 
-   $http.get('/Cnvs/' + id)
+   $http.get('/Lists/' + id)
    .then(function(response) {
       $scope.cnvTitle = response.data.title;
    });
 
-   $http.get('/Cnvs/' + id + '/Msgs')
+   $http.get('/Lists/' + id + '/Entry')
    .then(function(response) {
       $scope.msgs = response.data;
+      console.log("here");
+      console.log(response.data);
+      console.log(response.data[0]);
+
    })
    .catch(function(err) {
       $scope.msgs = null;
@@ -22,9 +26,9 @@ app.controller('cnvDetailController', ['$scope', '$state', '$http',
          notifyDlg.show($scope, "Error: No Message!", "Error");
       }
       else {
-         $http.post('/Cnvs/' + id + '/Msgs', {content: $scope.newMessage})
+         $http.post('/Lists/' + id + '/Entry', {content: $scope.newMessage})
          .then(function() {
-            return $http.get('/Cnvs/' + id + '/Msgs')
+            return $http.get('/Lists/' + id + '/Entry')
          })
          .then(function(response) {
             $scope.msgs = response.data;

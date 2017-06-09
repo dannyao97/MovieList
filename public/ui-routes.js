@@ -32,7 +32,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
          resolve: {
             cnvs: ['$q', '$http', '$stateParams',
                function($q, $http, $stateParams) {
-                  return $http.get('/Cnvs?owner=' + $stateParams.owner)
+                  return $http.get('/Lists?owner=' + $stateParams.owner)
                      .then(function(response) {
                         return response.data;
                      });
@@ -50,7 +50,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
          controller: 'cnvOverviewController',
          resolve: {
             cnvs: ['$q', '$http', function($q, $http) {
-               return $http.get('/Cnvs')
+               return $http.get('/Lists')
                .then(function(response) {
                   return response.data;
                });

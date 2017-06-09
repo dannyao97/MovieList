@@ -1,14 +1,8 @@
 <h2>{{cnvTitle}}</h2>
 <div class="list-group">
-   <div class="list-group-item" ng-repeat="msg in msgs">
-      <cnv-detail msg="msg"></cnv-detail>
+   <div class="list-group-item" ng-repeat="mov in msgs">
+      <cnv-detail mov="mov"></cnv-detail>
    </div>
-</div>
-
-<div style="padding-left: 1em">
-   <textarea ng-model="newMessage" ng-maxlength="5000"
-    style="min-height:15em; min-width:25em;">
-   </textarea>
 </div>
 
 <div style="padding-left: 1em">

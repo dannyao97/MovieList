@@ -154,9 +154,9 @@ router.get('/:listId/Entry', function(req, res) {
    var vld = req.validator;
    var listId = req.params.listId;
    var cnn = req.cnn;
-   var query = 'select Entry.id, whenAdded, firstName, lastName, movieId from ' +
-    'MovieList mv join Entry on listId = mv.id join Person p on ' +
-    'prsId = p.id where mv.id = ? ';
+   var query = 'select Entry.id, mov.genre, mov.title, mov.duration,' +
+    ' mov.director, mov.id, mov.movieLink, mov.language from Entry, Movie' +
+    ' mov where Entry.movieId = mov.id';
    var params = [parseInt(listId)];
 
    // if (req.query.dateTime) {
@@ -168,7 +168,6 @@ router.get('/:listId/Entry', function(req, res) {
    //    params.push(localISOTime);
    // }
 
-   query += ' order by whenAdded asc';
    // And finally add a limit clause and parameter if indicated.
    if (req.query.num) {
       query += ' limit ?';
