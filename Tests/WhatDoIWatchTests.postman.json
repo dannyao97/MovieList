@@ -19,6 +19,8 @@
 		"c2c75248-dd57-1f6f-e418-93ff8c821010",
 		"9d50a43c-0f94-dc30-b085-2267d15bc893",
 		"e9f589f9-fc73-50b3-bb57-7d721a3fe725",
+		"3c12dc4c-3c44-3113-6891-ab2f675c2165",
+		"3a27e0ed-7bd4-e7f6-05ba-44742c724ea6",
 		"9e1b74d0-117f-396f-fa87-54b9110ebadd",
 		"0af90556-be4e-f14d-8f81-aff7a486a4cf",
 		"b11aa7a4-afc0-3154-b163-44a0b4bf8e79",
@@ -700,6 +702,50 @@
 			"responses": [],
 			"isFromCollection": true,
 			"folder": "39acd8f1-a993-6dc9-0906-004a6342b8f0",
+			"rawModeData": ""
+		},
+		{
+			"id": "3a27e0ed-7bd4-e7f6-05ba-44742c724ea6",
+			"headers": "",
+			"headerData": [],
+			"url": "{{url}}/Movies/4396",
+			"queryParams": [],
+			"preRequestScript": "",
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "DELETE",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "tests[\"Status code is 400\"] = responseCode.code === 400;\n\ntests[\"Body matches string\"] = responseBody.has(\"notFound\");",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1496994607649,
+			"name": "Admin Remove \"New Movie\" copy",
+			"description": "\n",
+			"collectionId": "244e4e02-86fc-95f1-ea47-a82fed8f635b",
+			"responses": [],
+			"rawModeData": ""
+		},
+		{
+			"id": "3c12dc4c-3c44-3113-6891-ab2f675c2165",
+			"headers": "",
+			"headerData": [],
+			"url": "{{url}}/Movies/4396",
+			"queryParams": [],
+			"preRequestScript": "",
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "DELETE",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1496994613912,
+			"name": "Admin Remove \"New Movie\"",
+			"description": "\n",
+			"collectionId": "244e4e02-86fc-95f1-ea47-a82fed8f635b",
+			"responses": [],
 			"rawModeData": ""
 		},
 		{
@@ -1850,16 +1896,34 @@
 		{
 			"id": "9d50a43c-0f94-dc30-b085-2267d15bc893",
 			"headers": "Content-Type: application/json\n",
-			"url": "{{url}}/Movie?movie=New_Movie",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/Movies?movie=New_Movie",
+			"queryParams": [
+				{
+					"key": "movie",
+					"value": "New_Movie",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
 			"preRequestScript": "",
 			"pathVariables": {},
+			"pathVariableData": [],
 			"method": "GET",
 			"data": [],
 			"dataMode": "raw",
 			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nvar jsonData = JSON.parse(responseBody);\ntests[\"title\"] = jsonData[0].title === \"New Movie\";\ntests[\"director\"] = jsonData[0].director === \"Clint Staley\";\ntests[\"duration\"] = jsonData[0].duration === 2000;\n",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1496854955582,
+			"time": 1496993808581,
 			"name": "Admin Get \"New Movie\"",
 			"description": "\n",
 			"collectionId": "244e4e02-86fc-95f1-ea47-a82fed8f635b",
@@ -2278,16 +2342,26 @@
 		{
 			"id": "c2c75248-dd57-1f6f-e418-93ff8c821010",
 			"headers": "Content-Type: application/json\n",
-			"url": "{{url}}/Movie",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/Movies",
+			"queryParams": [],
 			"preRequestScript": "",
 			"pathVariables": {},
+			"pathVariableData": [],
 			"method": "GET",
 			"data": [],
 			"dataMode": "raw",
 			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1496819015933,
+			"time": 1496993804775,
 			"name": "Admin Get Movies",
 			"description": "\n",
 			"collectionId": "244e4e02-86fc-95f1-ea47-a82fed8f635b",
@@ -2316,16 +2390,26 @@
 		{
 			"id": "c649517e-4bc7-96ef-5c93-80c04c7339b0",
 			"headers": "Content-Type: application/json\n",
-			"url": "{{url}}/Movie",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/Movies",
+			"queryParams": [],
 			"preRequestScript": "",
 			"pathVariables": {},
+			"pathVariableData": [],
 			"method": "POST",
 			"data": [],
 			"dataMode": "raw",
 			"tests": "tests[\"Status code is 401\"] = responseCode.code === 401;",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1496819017498,
+			"time": 1496993815907,
 			"name": "Make Movie",
 			"description": "\n",
 			"collectionId": "244e4e02-86fc-95f1-ea47-a82fed8f635b",
@@ -2678,16 +2762,26 @@
 		{
 			"id": "d853a116-3f2e-a068-9646-974669b11898",
 			"headers": "Content-Type: application/json\n",
-			"url": "{{url}}/Movie",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/Movies",
+			"queryParams": [],
 			"preRequestScript": "",
 			"pathVariables": {},
+			"pathVariableData": [],
 			"method": "POST",
 			"data": [],
 			"dataMode": "raw",
 			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1496854914701,
+			"time": 1496993799517,
 			"name": "Admin Make Movie",
 			"description": "\n",
 			"collectionId": "244e4e02-86fc-95f1-ea47-a82fed8f635b",
@@ -2945,16 +3039,34 @@
 		{
 			"id": "e9f589f9-fc73-50b3-bb57-7d721a3fe725",
 			"headers": "Content-Type: application/json\n",
-			"url": "{{url}}/Movie?movie=New_Movie_2000",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/Movies?movie=New_Movie_2000",
+			"queryParams": [
+				{
+					"key": "movie",
+					"value": "New_Movie_2000",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
 			"preRequestScript": "",
 			"pathVariables": {},
+			"pathVariableData": [],
 			"method": "GET",
 			"data": [],
 			"dataMode": "raw",
 			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\ntests[\"Empty List\"] = responseBody === \"[]\";",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1496854862317,
+			"time": 1496993811434,
 			"name": "Admin Get \"New Movie 2000\"",
 			"description": "\n",
 			"collectionId": "244e4e02-86fc-95f1-ea47-a82fed8f635b",
@@ -2964,16 +3076,26 @@
 		{
 			"id": "ed67b5c2-d4a0-548b-60ec-a210d0ccf5ff",
 			"headers": "Content-Type: application/json\n",
-			"url": "{{url}}/Movie",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/Movies",
+			"queryParams": [],
 			"preRequestScript": "",
 			"pathVariables": {},
+			"pathVariableData": [],
 			"method": "POST",
 			"data": [],
 			"dataMode": "raw",
 			"tests": "tests[\"Status code is 400\"] = responseCode.code === 400;\n\ntests[\"Body matches string\"] = responseBody.has(\"missingField\");",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1496818228729,
+			"time": 1496993796840,
 			"name": "Admin Make Movie (Empty Title)",
 			"description": "\n",
 			"collectionId": "244e4e02-86fc-95f1-ea47-a82fed8f635b",
