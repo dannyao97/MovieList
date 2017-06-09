@@ -41,7 +41,7 @@ app.use(CnnPool.router);
 // Load all subroutes
 app.use('/Prss', require('./Routes/Account/Prss'));
 app.use('/Ssns', require('./Routes/Account/Ssns'));
-app.use('/Cnvs', require('./Routes/Conversation/Cnvs.js'));
+app.use('/Lists', require('./Routes/MovieList/Lists.js'));
 app.use('/Msgs', require('./Routes/Conversation/Msgs.js'));
 
 // Special debugging route for /DB DELETE.  Clears all table contents,
