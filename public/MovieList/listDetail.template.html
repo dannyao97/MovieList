@@ -1,0 +1,11 @@
+<h2>{{listTitle}}</h2>
+<div class="list-group">
+   <div class="list-group-item" ng-repeat="mov in movies">
+      <list-detail mov="mov"></list-detail>
+   </div>
+</div>
+
+<div style="padding-left: 1em">
+   <button class="btn btn-primary" type="button" style="margin-top:5px"
+    ng-click="newMsg()">New Message</button>
+</div>

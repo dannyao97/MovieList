@@ -1,0 +1,14 @@
+<h2 style="padding-left: 15px">Movie Lists</h2>
+<div class="list-group">
+   <div class="list-group-item" ng-repeat="listEntry in movLists">
+      <list-summary to-summarize="listEntry" show="user && user.id === listEntry.ownerId"
+      edit="editCnv($index)" del="delCnv($index)">
+      </list-summary>
+   </div>
+</div>
+
+<div style="padding-left: 15px">
+   <button class="btn btn-primary" type="button" style="margin-top:5px" ng-click="newCnv()">
+      New Movie List
+   </button>
+</div>

@@ -1,7 +1,7 @@
-app.controller('cnvOverviewController', ['$scope', '$state', '$http',
- '$uibModal', 'notifyDlg', 'cnvs',
- function($scope, $state, $http, $uibM, nDlg, cnvs) {
-   $scope.cnvs = cnvs;
+app.controller('listOverviewController', ['$scope', '$state', '$http',
+ '$uibModal', 'notifyDlg', 'movLists',
+ function($scope, $state, $http, $uibM, nDlg, movLists) {
+   $scope.movLists = movLists;
 
    $scope.newCnv = function() {
       $scope.title = null;
@@ -9,7 +9,7 @@ app.controller('cnvOverviewController', ['$scope', '$state', '$http',
       var selectedTitle;
 
       $uibM.open({
-         templateUrl: 'Conversation/editCnvDlg.template.html',
+         templateUrl: 'MovieList/editCnvDlg.template.html',
          scope: $scope
       }).result
       .then(function(newTitle) {
@@ -20,7 +20,7 @@ app.controller('cnvOverviewController', ['$scope', '$state', '$http',
          return $http.get('/Lists');
       })
       .then(function(rsp) {
-         $scope.cnvs = rsp.data;
+         $scope.movLists = rsp.data;
       })
       .catch(function(err) {
          // console.log("Error: " + JSON.stringify(err));
@@ -31,8 +31,8 @@ app.controller('cnvOverviewController', ['$scope', '$state', '$http',
    };
 
    $scope.delCnv = function($index) {
-      var id = $scope.cnvs[$index].id;
-      var delTitle = $scope.cnvs[$index].title;
+      var id = $scope.movLists[$index].id;
+      var delTitle = $scope.movLists[$index].title;
 
       nDlg.show($scope, "Delete this Conversation?",
          "Delete Conversation", ["Yes", "No"])
@@ -44,16 +44,16 @@ app.controller('cnvOverviewController', ['$scope', '$state', '$http',
          return $http.get('/Lists');
       })
       .then(function(rsp) {
-         $scope.cnvs = rsp.data;
+         $scope.movLists = rsp.data;
       });
    };
 
    $scope.editCnv = function($index) {
-      var id = $scope.cnvs[$index].id;
+      var id = $scope.movLists[$index].id;
       var selectedTitle;
       $scope.dlgTitle = "Edit Conversation Title";
       $uibM.open({
-         templateUrl: 'Conversation/editCnvDlg.template.html',
+         templateUrl: 'MovieList/editCnvDlg.template.html',
          scope: $scope
       }).result
       .then(function(newTitle) {
@@ -64,7 +64,7 @@ app.controller('cnvOverviewController', ['$scope', '$state', '$http',
          return $http.get('/Lists');
       })
       .then(function(rsp) {
-         $scope.cnvs = rsp.data;
+         $scope.movLists = rsp.data;
       })
       .catch(function(err) {
          // console.log("Error: " + JSON.stringify(err));

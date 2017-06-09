@@ -27,7 +27,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
       })
       .state('myCnvOverview', {
          url: '/myCnvs?owner',
-         templateUrl: 'Conversation/myCnvOverview.template.html',
+         templateUrl: 'MovieList/myCnvOverview.template.html',
          controller: 'myCnvOverviewController',
          resolve: {
             cnvs: ['$q', '$http', '$stateParams',
@@ -39,17 +39,17 @@ app.config(['$stateProvider', '$urlRouterProvider',
                }]
          }
       })
-      .state('cnvDetail', {
-         url: '/cnvs/:cnvId',
-         templateUrl: 'Conversation/cnvDetail.template.html',
-         controller: 'cnvDetailController'
+      .state('listDetail', {
+         url: '/Lists/:listId',
+         templateUrl: 'MovieList/listDetail.template.html',
+         controller: 'listDetailController'
       })
-      .state('cnvOverview', {
-         url: '/cnvs',
-         templateUrl: 'Conversation/cnvOverview.template.html',
-         controller: 'cnvOverviewController',
+      .state('listOverview', {
+         url: '/Lists',
+         templateUrl: 'MovieList/listOverview.template.html',
+         controller: 'listOverviewController',
          resolve: {
-            cnvs: ['$q', '$http', function($q, $http) {
+            movLists: ['$q', '$http', function($q, $http) {
                return $http.get('/Lists')
                .then(function(response) {
                   return response.data;

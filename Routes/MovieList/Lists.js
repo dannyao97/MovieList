@@ -156,17 +156,8 @@ router.get('/:listId/Entry', function(req, res) {
    var cnn = req.cnn;
    var query = 'select Entry.id, mov.genre, mov.title, mov.duration,' +
     ' mov.director, mov.id, mov.movieLink, mov.language from Entry, Movie' +
-    ' mov where Entry.movieId = mov.id';
+    ' mov where Entry.movieId = mov.id and Entry.listId = ?';
    var params = [parseInt(listId)];
-
-   // if (req.query.dateTime) {
-   //    query += 'and Message.whenMade < ?';
-   //    //offset in milliseconds
-   //    var tzoffset = (new Date()).getTimezoneOffset() * 60000;
-   //    var localISOTime = (new Date(parseInt(req.query.dateTime) - tzoffset))
-   //     .toISOString().slice(0, 19).replace('T', ' ');
-   //    params.push(localISOTime);
-   // }
 
    // And finally add a limit clause and parameter if indicated.
    if (req.query.num) {
@@ -180,19 +171,14 @@ router.get('/:listId/Entry', function(req, res) {
          cnn.chkQry('select * from MovieList where id = ?', [listId], cb);
       }
    },
-   function(cnvs, fields, cb) { // Get indicated messages
-      if (vld.check(cnvs.length, Tags.notFound, null, cb)) {
-         cnn.chkQry(query, params, cb);
+   function(res, fields, cb) { // Get indicated messages
+      if (vld.check(res.length, Tags.notFound, null, cb)) {
+         cnn.chkQry(query, listId, cb);
       }
    },
-   function(msgs, fields, cb) { // Return retrieved messages
-      msgs.forEach(function(val) {
-         if (val.whenAdded !== null) {
-            var newDate = new Date(val.whenAdded).getTime();
-            val.whenAdded = newDate;
-         }
-      });
-      res.status(200).json(msgs);
+   function(qRes, fields, cb) { // Return retrieved messages
+      console.log(qRes);
+      res.status(200).json(qRes);
       cb();
    }],
    function(err){

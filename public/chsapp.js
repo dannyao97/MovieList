@@ -49,18 +49,18 @@ app.filter('tagError', ['errMap', 'errLanguage',
       };
    }]);
 
-app.directive('cnvSummary', [function() {
+app.directive('listSummary', [function() {
    return {
       restrict: 'E',
       scope: {
-         cnv: "=toSummarize",
+         listEntry: "=toSummarize",
          show: '=',
          edit: '&',
          del: '&',
          detail: '&'
       },
-      template: '<a  href="#" ui-sref="cnvDetail({cnvId:{{cnv.id}}})">' +
-       '{{cnv.title}} {{cnv.lastMessage | date : "medium"}}</a>' +
+      template: '<a  href="#" ui-sref="listDetail({listId:{{listEntry.id}}})">' +
+       '{{listEntry.title}} {{listEntry.lastMessage | date : "medium"}}</a>' +
        '<button type="button" class="btn btn-default btn-sm pull-right"' +
        'ng-show="show" ng-click="del()">' +
        '<span class="glyphicon glyphicon-trash"></span></button>' +
@@ -70,7 +70,7 @@ app.directive('cnvSummary', [function() {
    };
 }]);
 
-app.directive('cnvDetail', [function() {
+app.directive('listDetail', [function() {
    return {
       restrict: 'E',
       scope: {
