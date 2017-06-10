@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{hdr || "Note"}}</h3>
+</div>
+<div class = "modal-body">
+    <div style=" padding-left:1.5em;display:inline; width:100%">
+        <input style="width:80%" type="text" ng-model="search">
+        <button type="button" class="btn btn-info"
+                ng-click="movieRefresh(search)">Info
+        </button>
+    </div>
+    <ul>
+        <li ng-repeat="mov in searchMovies">{{mov.title}}</li>
+    </ul>
+</div>
+<div class="modal-footer">
+   <span ng-repeat="btn in buttons">
+      <button class="btn btn-primary" type="button" ng-click="$close(btn)">
+         {{btn}}
+      </button>
+   </span>
+</div>

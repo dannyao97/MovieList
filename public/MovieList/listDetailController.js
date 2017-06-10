@@ -1,7 +1,7 @@
 
 app.controller('listDetailController', ['$scope', '$state', '$http',
- 'notifyDlg', '$stateParams',
- function($scope, $state, $http, notifyDlg, $stateParams) {
+ 'movieDlg', '$stateParams',
+ function($scope, $state, $http, movieDlg, $stateParams) {
    var id = $stateParams.listId;
 
    $http.get('/Lists/' + id)
@@ -18,23 +18,10 @@ app.controller('listDetailController', ['$scope', '$state', '$http',
       $scope.movies = null;
    });
 
-   $scope.newMsg = function() {
-      if ($scope.newMessage === "" || $scope.newMessage === undefined) {
-         notifyDlg.show($scope, "Error: No Message!", "Error");
-      }
-      else {
-         $http.post('/Lists/' + id + '/Entry', {content: $scope.newMessage})
-         .then(function() {
-            return $http.get('/Lists/' + id + '/Entry')
-         })
-         .then(function(response) {
-            $scope.movies = response.data;
-            $scope.newMessage = "";
-         })
-         .catch(function(err) {
-            if (err && err.data)
-               notifyDlg.show($scope, "Error: "+ err.data[0].tag, "Error");
-         })
-      }
-   };
+    $scope.newMsg = function() {
+       $http.get('/Movies?num=10')
+       .then(function(response) {
+          movieDlg.show($scope, response.data, "Add Movie");
+       });
+    };
 }]);

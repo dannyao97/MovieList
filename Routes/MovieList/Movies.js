@@ -9,28 +9,38 @@ router.baseURL = '/Movies';
 router.get('/', function(req, res) {
    var vld = req.validator;
    var movie = req.query.movie;
+   var query, params;
+
+   if(movie) {
+      query = 'select id, director, duration, genre, title, ' +
+       'movieLink, language, rating, year, imdbScore from Movie ' +
+       'where title like ?';
+      params = ['%' + movie + '%'];
+   }
+   else{
+      query = 'select id, director, duration, genre, title, ' +
+       'movieLink, language, rating, year, imdbScore from Movie';
+      params = [];
+   }
+
+   if (req.query.num) {
+      query += ' limit ?';
+      params.push(parseInt(req.query.num));
+   }
 
    async.waterfall([
-   function(cb) {
-      if (vld.checkPrsOK(req.session.id, cb)) {
-         if (movie) {
-            req.cnn.chkQry('select id, director, duration, genre, title, ' +
-             'movieLink, language, rating, year, imdbScore from Movie ' +
-             'where title like ?', ['%' + movie + '%'], cb);
-         }
-         else {
-            req.cnn.chkQry('select id, director, duration, genre, title, ' +
-             'movieLink, language, rating, year, imdbScore from Movie', [movie], cb);
-         }
-      }
-   },
-   function(qRes, fields, cb) {
-      res.status(200).json(qRes);
-      cb();
-   }],
-   function(err) {
-      req.cnn.release();
-   });
+       function(cb) {
+          if (vld.checkPrsOK(req.session.id, cb)) {
+             req.cnn.chkQry(query, params, cb);
+          }
+       },
+       function(qRes, fields, cb) {
+          res.status(200).json(qRes);
+          cb();
+       }],
+    function(err) {
+       req.cnn.release();
+    });
 });
 
 router.post('/', function(req, res) {
