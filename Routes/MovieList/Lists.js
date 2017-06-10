@@ -134,11 +134,14 @@ router.delete('/:listId', function(req, res) {
          cnn.chkQry('select * from MovieList where id = ?', [listId], cb);
       }
    },
-   function(cnvs, fields, cb) {
-      if (vld.check(cnvs.length, Tags.notFound, null, cb) &&
-       vld.checkPrsOK(cnvs[0].ownerId, cb)) {
+   function(qRes, fields, cb) {
+      if (vld.check(qRes.length, Tags.notFound, null, cb) &&
+       vld.checkPrsOK(qRes[0].ownerId, cb)) {
          cnn.chkQry('delete from MovieList where id = ?', [listId], cb);
       }
+   },
+   function(eRes, fields, cb) {
+      cnn.chkQry('delete from Entry where listId = ?', [listId], cb);
    },
    function(dRes, fields, cb) {
       res.header("Content-Length", 0);
