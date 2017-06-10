@@ -1,29 +1,28 @@
 
-
-app.controller('myCnvOverviewController', ['$scope', '$state', '$http',
- '$uibModal', 'notifyDlg', 'cnvs', '$stateParams',
- function($scope, $state, $http, $uibM, nDlg, cnvs, $stateParams) {
-   $scope.cnvs = cnvs;
+app.controller('myListOverviewController', ['$scope', '$state', '$http',
+ '$uibModal', 'notifyDlg', 'movLists', '$stateParams',
+ function($scope, $state, $http, $uibM, nDlg, movLists, $stateParams) {
+   $scope.movLists = movLists;
    var ownerId = $stateParams.owner;
 
-   $scope.newCnv = function() {
+   $scope.newList = function() {
       $scope.title = null;
-      $scope.dlgTitle = "New Conversation";
+      $scope.dlgTitle = "Create a Movie List";
       var selectedTitle;
 
       $uibM.open({
-         templateUrl: 'Conversation/editCnvDlg.template.html',
+         templateUrl: 'MovieList/editListDlg.template.html',
          scope: $scope
       }).result
          .then(function(newTitle) {
             selectedTitle = newTitle;
-            return $http.post("/Cnvs", {title: newTitle});
+            return $http.post("/Lists", {title: newTitle});
          })
          .then(function() {
-            return $http.get('/Cnvs?owner=' + ownerId);
+            return $http.get('/Lists?owner=' + ownerId);
          })
          .then(function(rsp) {
-            $scope.cnvs = rsp.data;
+            $scope.movLists = rsp.data;
          })
          .catch(function(err) {
             // console.log("Error: " + JSON.stringify(err));
@@ -33,41 +32,41 @@ app.controller('myCnvOverviewController', ['$scope', '$state', '$http',
          });
    };
 
-   $scope.delCnv = function($index) {
-      var id = $scope.cnvs[$index].id;
-      var delTitle = $scope.cnvs[$index].title;
+   $scope.delList = function($index) {
+      var id = $scope.movLists[$index].id;
+      var delTitle = $scope.movLists[$index].title;
 
-      nDlg.show($scope, "Delete this Conversation?",
-         "Delete Conversation", ["Yes", "No"])
+      nDlg.show($scope, "Delete " + delTitle + "?",
+         "Delete Movie List", ["Yes", "No"])
          .then(function(btn) {
             if (btn === "Yes")
-               return $http.delete("/Cnvs/" + id, {title: delTitle});
+               return $http.delete("/Lists/" + id, {title: delTitle});
          })
          .then(function() {
-            return $http.get('/Cnvs?owner=' + ownerId);
+            return $http.get('/Lists?owner=' + ownerId);
          })
          .then(function(rsp) {
-            $scope.cnvs = rsp.data;
+            $scope.movLists = rsp.data;
          });
    };
 
-   $scope.editCnv = function($index) {
-      var id = $scope.cnvs[$index].id;
+   $scope.editList = function($index) {
+      var id = $scope.movLists[$index].id;
       var selectedTitle;
-      $scope.dlgTitle = "Edit Conversation Title";
+      $scope.dlgTitle = "Edit: " + $scope.movLists[$index].title;
       $uibM.open({
-         templateUrl: 'Conversation/editCnvDlg.template.html',
+         templateUrl: 'MovieList/editListDlg.template.html',
          scope: $scope
       }).result
          .then(function(newTitle) {
             selectedTitle = newTitle;
-            return $http.put("/Cnvs/" + id, {title: newTitle});
+            return $http.put("/Lists/" + id, {title: newTitle});
          })
          .then(function() {
-            return $http.get('/Cnvs?owner=' + ownerId);
+            return $http.get('/Lists?owner=' + ownerId);
          })
          .then(function(rsp) {
-            $scope.cnvs = rsp.data;
+            $scope.movLists = rsp.data;
          })
          .catch(function(err) {
             // console.log("Error: " + JSON.stringify(err));

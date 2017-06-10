@@ -25,12 +25,12 @@ app.config(['$stateProvider', '$urlRouterProvider',
          templateUrl: 'Register/register.template.html',
          controller: 'registerController'
       })
-      .state('myCnvOverview', {
-         url: '/myCnvs?owner',
-         templateUrl: 'MovieList/myCnvOverview.template.html',
-         controller: 'myCnvOverviewController',
+      .state('myListOverview', {
+         url: '/myLists?owner',
+         templateUrl: 'MovieList/myListOverview.template.html',
+         controller: 'myListOverviewController',
          resolve: {
-            cnvs: ['$q', '$http', '$stateParams',
+            movLists: ['$q', '$http', '$stateParams',
                function($q, $http, $stateParams) {
                   return $http.get('/Lists?owner=' + $stateParams.owner)
                      .then(function(response) {

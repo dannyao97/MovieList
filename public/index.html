@@ -18,7 +18,7 @@
 <script src="Login/logoutController.js"></script>
 <script src="MovieList/listOverviewController.js"></script>
 <script src="MovieList/listDetailController.js"></script>
-<script src="MovieList/myCnvOverviewController.js"></script>
+<script src="MovieList/myListOverviewController.js"></script>
 <script src="ui-routes.js"></script>
 <script src="Util/notifyDlg.js"></script>
 <script src="Util/langController.js"></script>
@@ -36,7 +36,7 @@
             <a ui-sref="listOverview">All Lists</a>
          </li>
          <li ng-if="!!user">
-            <a ui-sref="myCnvOverview({owner: {{user.id}}})">
+            <a ui-sref="myListOverview({owner: {{user.id}}})">
                My Lists
             </a>
          </li>

@@ -18,7 +18,7 @@ router.get('/', function(req, res) {
              , [qOwnerId], cb);
          }
          else {
-            req.cnn.chkQry('select id, title from MovieList', null, cb);
+            req.cnn.chkQry('select id, title, ownerId from MovieList', null, cb);
          }
       }
    },
@@ -177,7 +177,6 @@ router.get('/:listId/Entry', function(req, res) {
       }
    },
    function(qRes, fields, cb) { // Return retrieved messages
-      console.log(qRes);
       res.status(200).json(qRes);
       cb();
    }],
@@ -209,14 +208,7 @@ router.post('/:listId/Entry', function(req, res){
       }
       res.header("Content-Length", 0);
       res.location('/Lists/' + movies.insertId).end();
-   },
-   // function(insRes, fields, cb) {
-   //    cnn.chkQry("update MovieList set lastMessage = ? where id = ?",
-   //     [curTime, listId], cb);
-   //    res.header("Content-Length", 0);
-   //    res.location('/Msgs/' + insRes.insertId).end();
-   // }
-   ],
+   }],
    function(err) {
       cnn.release();
    });

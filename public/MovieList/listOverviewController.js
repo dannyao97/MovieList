@@ -3,13 +3,13 @@ app.controller('listOverviewController', ['$scope', '$state', '$http',
  function($scope, $state, $http, $uibM, nDlg, movLists) {
    $scope.movLists = movLists;
 
-   $scope.newCnv = function() {
+   $scope.newList = function() {
       $scope.title = null;
-      $scope.dlgTitle = "New Conversation";
+      $scope.dlgTitle = "Create a Movie List";
       var selectedTitle;
 
       $uibM.open({
-         templateUrl: 'MovieList/editCnvDlg.template.html',
+         templateUrl: 'MovieList/editListDlg.template.html',
          scope: $scope
       }).result
       .then(function(newTitle) {
@@ -30,12 +30,12 @@ app.controller('listOverviewController', ['$scope', '$state', '$http',
       });
    };
 
-   $scope.delCnv = function($index) {
+   $scope.delList = function($index) {
       var id = $scope.movLists[$index].id;
       var delTitle = $scope.movLists[$index].title;
 
-      nDlg.show($scope, "Delete this Conversation?",
-         "Delete Conversation", ["Yes", "No"])
+      nDlg.show($scope, "Delete " + delTitle + "?",
+         "Delete Movie List", ["Yes", "No"])
       .then(function(btn) {
          if (btn === "Yes")
             return $http.delete("/Lists/" + id, {title: delTitle});
@@ -48,12 +48,12 @@ app.controller('listOverviewController', ['$scope', '$state', '$http',
       });
    };
 
-   $scope.editCnv = function($index) {
+   $scope.editList = function($index) {
       var id = $scope.movLists[$index].id;
       var selectedTitle;
-      $scope.dlgTitle = "Edit Conversation Title";
+      $scope.dlgTitle = "Edit: " + $scope.movLists[$index].title;
       $uibM.open({
-         templateUrl: 'MovieList/editCnvDlg.template.html',
+         templateUrl: 'MovieList/editListDlg.template.html',
          scope: $scope
       }).result
       .then(function(newTitle) {

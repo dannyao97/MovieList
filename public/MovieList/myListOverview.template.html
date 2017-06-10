@@ -1,7 +1,7 @@
-<h2 style="padding-left: 15px">Movie Lists</h2>
+<h2 style="padding-left: 15px">My Movie Lists</h2>
 <div class="list-group">
    <div class="list-group-item" ng-repeat="listEntry in movLists">
-      <list-summary to-summarize="listEntry" show="user && user.id === listEntry.ownerId"
+      <list-summary to-summarize="listEntry" show="true"
       edit="editList($index)" del="delList($index)">
       </list-summary>
    </div>

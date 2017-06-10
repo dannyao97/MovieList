@@ -60,7 +60,7 @@ app.directive('listSummary', [function() {
          detail: '&'
       },
       template: '<a  href="#" ui-sref="listDetail({listId:{{listEntry.id}}})">' +
-       '{{listEntry.title}} {{listEntry.lastMessage | date : "medium"}}</a>' +
+       '{{listEntry.title}}</a>' +
        '<button type="button" class="btn btn-default btn-sm pull-right"' +
        'ng-show="show" ng-click="del()">' +
        '<span class="glyphicon glyphicon-trash"></span></button>' +
