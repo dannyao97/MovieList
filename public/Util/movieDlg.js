@@ -1,7 +1,7 @@
 // Declare a service that allows an error message.
 app.factory("movieDlg", ["$uibModal", "$http", function(uibM, $http) {
    return {
-      show: function(scp, movies, hdr, btns, sz) {
+      show: function(scp, movies, hdr, listId, btns, sz) {
          scp.searchMovies = movies;
          scp.hdr = hdr;
          scp.buttons = btns || ['OK'];
@@ -11,6 +11,10 @@ app.factory("movieDlg", ["$uibModal", "$http", function(uibM, $http) {
             .then(function(response){
                scp.searchMovies = response.data;
             });
+         };
+         scp.addMovie = function(mov){
+           console.log(mov.title);
+           $http.post('/Lists/' + listId + "/Entry", {"movieId":mov.id})
          };
          return uibM.open({
             templateUrl: 'Util/movieDlg.template.html',

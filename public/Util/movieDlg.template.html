@@ -9,7 +9,8 @@
         </button>
     </div>
     <ul>
-        <li ng-repeat="mov in searchMovies">{{mov.title}}</li>
+        <li ng-click="addMovie(mov)" ng-repeat="mov in searchMovies">{{mov
+            .title}}</li>
     </ul>
 </div>
 <div class="modal-footer">
