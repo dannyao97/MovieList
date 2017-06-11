@@ -31,3 +31,7 @@
    width: 100%;
    font-size: 18px;
 }
+
+.selected {
+   background-color: #52ff59;
+}

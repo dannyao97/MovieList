@@ -21,13 +21,19 @@ app.controller('listDetailController', ['$scope', '$state', '$http',
     $scope.newMsg = function() {
        $http.get('/Movies?num=10')
        .then(function(response) {
-          movieDlg.show($scope, response.data,"Add Movie", id);
+          return movieDlg.show($scope, response.data,"Add Movie", id);
        })
        .then(function(){
-          $http.get('/Lists/' + id + '/Entry');
+          return $http.get('/Lists/' + id + '/Entry');
        })
        .then(function(response){
           $scope.movies = response.data;
+       })
+       .catch(function(err){
+          $http.get('/Lists/' + id  + '/Entry')
+          .then(function(response) {
+             $scope.movies = response.data;
+          })
        });
     };
 }]);

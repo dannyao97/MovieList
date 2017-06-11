@@ -5,6 +5,7 @@ app.factory("movieDlg", ["$uibModal", "$http", function(uibM, $http) {
          scp.searchMovies = movies;
          scp.hdr = hdr;
          scp.buttons = btns || ['OK'];
+         scp.selectedMovies = [];
          scp.movieRefresh = function(search){
             console.log(search);
             $http.get('/Movies?movie=' + search)
@@ -13,8 +14,15 @@ app.factory("movieDlg", ["$uibModal", "$http", function(uibM, $http) {
             });
          };
          scp.addMovie = function(mov){
-           console.log(mov.title);
-           $http.post('/Lists/' + listId + "/Entry", {"movieId":mov.id})
+            var movIndex;
+           if((movIndex = scp.selectedMovies.indexOf(mov.id)) >= 0){
+              //delete movie from list
+              scp.selectedMovies.splice(movIndex, 1);
+           }
+           else {
+              $http.post('/Lists/' + listId + "/Entry", {"movieId":mov.id});
+              scp.selectedMovies.push(mov.id);
+           }
          };
          return uibM.open({
             templateUrl: 'Util/movieDlg.template.html',
