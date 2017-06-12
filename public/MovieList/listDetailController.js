@@ -1,7 +1,7 @@
 
 app.controller('listDetailController', ['$scope', '$state', '$http',
- 'movieDlg', '$stateParams',
- function($scope, $state, $http, movieDlg, $stateParams) {
+ 'movieDlg', '$stateParams', 'notifyDlg',
+ function($scope, $state, $http, movieDlg, $stateParams, nDlg) {
    var id = $stateParams.listId;
 
    $http.get('/Lists/' + id)
@@ -36,4 +36,22 @@ app.controller('listDetailController', ['$scope', '$state', '$http',
           });
        });
     };
+
+    $scope.delEntry = function($index) {
+      var movie = $scope.movies[$index];
+      var entryId = movie.entryId;
+
+      nDlg.show($scope, "Are you sure you want to delete this movie?",
+         "Delete Movie Entry", ["Yes", "No"])
+      .then(function(btn) {
+         if (btn === "Yes")
+            return $http.delete("/Entry/" + entryId);
+      })
+      .then(function() {
+         return $http.get('/Lists/' + id + '/Entry');
+      })
+      .then(function(rsp) {
+         $scope.movies = rsp.data;
+      });
+   };
 }]);

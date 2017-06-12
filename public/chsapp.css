@@ -32,6 +32,11 @@
    font-size: 18px;
 }
 
+.delete {
+   display: inline;
+   float: right;
+}
+
 .selected {
    background-color: #52ff59;
 }

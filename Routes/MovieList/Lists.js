@@ -157,8 +157,8 @@ router.get('/:listId/Entry', function(req, res) {
    var vld = req.validator;
    var listId = req.params.listId;
    var cnn = req.cnn;
-   var query = 'select Entry.id, mov.genre, mov.title, mov.duration,' +
-    ' mov.director, mov.id, mov.movieLink, mov.language from Entry, Movie' +
+   var query = 'select Entry.id as entryId, mov.genre, mov.title, mov.duration,' +
+    ' mov.director, mov.id as movieId, mov.movieLink, mov.language from Entry, Movie' +
     ' mov where Entry.movieId = mov.id and Entry.listId = ?';
    var params = [parseInt(listId)];
 
@@ -176,7 +176,7 @@ router.get('/:listId/Entry', function(req, res) {
    },
    function(res, fields, cb) { // Get indicated messages
       if (vld.check(res.length, Tags.notFound, null, cb)) {
-         cnn.chkQry(query, listId, cb);
+         cnn.chkQry(query, params, cb);
       }
    },
    function(qRes, fields, cb) { // Return retrieved messages
@@ -218,9 +218,9 @@ router.post('/:listId/Entry', function(req, res){
             listId: listId, prsId: req.session.id,
             whenAdded: curTime, movieId: body.movieId
          }, cb);
+         res.header("Content-Length", 0);
+         res.location('/Lists/' + exist.insertId).end();
       }
-      res.header("Content-Length", 0);
-      res.location('/Lists/' + exist.insertId).end();
    }],
    function(err) {
       cnn.release();

@@ -74,13 +74,19 @@ app.directive('listDetail', [function() {
    return {
       restrict: 'E',
       scope: {
-         mov: '='
+         mov: '=',
+         show: '=',
+         del: '&'
       },
       template: '<div class="background"> <span>{{mov.title}}' +
          '<span class="minutes"><i>{{mov.duration}} minutes</i></span>' +
          '<span class="language">{{mov.language}}</span> <br> </span>' +
          '<span class="director_name"><b>{{mov.director}}</b></span>' +
-         '<span class="genre">{{mov.genre}}</span> </div>'
+         '<span class="genre">{{mov.genre}}</span>' +
+         '<button type="button" class="delete btn btn-default btn-sm pull-right"' +
+         'ng-show="show" ng-click="del()">' +
+         '<span class="glyphicon glyphicon-trash"></span></button>' +
+         ' </div>'
    };
 }]);
 

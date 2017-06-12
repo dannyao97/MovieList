@@ -3,6 +3,8 @@
 <head>
     <title>CHS</title>
 </head>
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="bower_components/angular/angular.min.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
@@ -27,7 +29,7 @@
 <script src="Util/langController.js"></script>
 
 <body ng-app="mainApp">
-   <nav class="navbar navbar-default">
+   <nav class="navbar navbar-default collapse navbar-collapse">
       <ul class="nav navbar-nav">
          <li ng-if="!user">
             <a ui-sref="login">Login</a>
@@ -47,21 +49,17 @@
             <a ui-sref="usersOverview">Users</a>
          </li>
       </ul>
-      <ul class="nav navbar pull-right">
+      <ul class="nav navbar-nav pull-right">
          <li>
             <select ng-controller="langController" ng-model="selectedLang"
                ng-change="changeLang(selectedLang)">
                <option ng-repeat="lang in languages">{{lang}}</option>
             </select>
          </li>
-      </ul>
-      <ul ng-if="!!user" class="nav navbar pull-right">
-         <li style="display:inline-block">
+         <li ng-if="!!user" class="navbar-text">
             {{user.firstName + " " + user.lastName}}
          </li>
-      </ul>
-      <ul ng-if="!!user" class="nav navbar pull-right">
-         <li>
+         <li ng-if="!!user">
             <a ui-sref="logout">Logout</a>
          </li>
       </ul>

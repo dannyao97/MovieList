@@ -42,4 +42,30 @@ router.get('/', function(req, res) {
    res.status(404).end();
 });
 
+router.delete('/:entryId', function(req, res) {
+   var vld = req.validator;
+   var entryId = req.params.entryId;
+   var cnn = req.cnn;
+
+   async.waterfall([
+   function(cb) {
+      if (vld.checkPrsOK(req.session.id, cb)) {
+         cnn.chkQry('select * from Entry where id = ?', [entryId], cb);
+      }
+   },
+   function(qRes, fields, cb) {
+      if (vld.check(qRes.length, Tags.notFound, null, cb)) {
+         cnn.chkQry('delete from Entry where id = ?', [entryId], cb);
+      }
+   },
+   function(dRes, fields, cb) {
+      res.header("Content-Length", 0);
+      res.status(200).end();
+      cb();
+   }],
+   function(err) {
+      cnn.release();
+   });
+});
+
 module.exports = router;
