@@ -1,0 +1,22 @@
+<div class="background">
+   <span>{{mov.title}}
+      <span class="minutes"><i>{{mov.duration}} minutes</i></span>
+      <span class="language" ng-switch="show">
+         <span ng-switch-when="true" style="padding-right: 3.5em">
+            {{mov.language}}
+         </span>
+         <span ng-switch-default style="padding-right: 15px">
+            {{mov.language}}
+         </span>
+      </span>
+      <br/>
+      <span>
+         <button type="button" class="delete btn btn-default btn-sm"
+            ng-show="show" ng-click="del()">
+            <span class="glyphicon glyphicon-trash"></span>
+         </button>
+      </span>
+   </span>
+   <span class="director_name"><b>{{mov.director}}</b></span>
+   <span class="genre">{{mov.genre}}</span>
+</div>

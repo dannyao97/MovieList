@@ -59,14 +59,7 @@ app.directive('listSummary', [function() {
          del: '&',
          detail: '&'
       },
-      template: '<a  href="#" ui-sref="listDetail({listId:{{listEntry.id}}})">' +
-       '{{listEntry.title}}</a>' +
-       '<button type="button" class="btn btn-default btn-sm pull-right"' +
-       'ng-show="show" ng-click="del()">' +
-       '<span class="glyphicon glyphicon-trash"></span></button>' +
-       '<button type="button" class="btn btn-default btn-sm pull-right"' +
-       'ng-show="show" ng-click="edit()">' +
-       '<span class="glyphicon glyphicon-edit"></span></button>'
+      templateUrl: 'MovieList/listSummaryDirective.html'
    };
 }]);
 
@@ -78,15 +71,7 @@ app.directive('listDetail', [function() {
          show: '=',
          del: '&'
       },
-      template: '<div class="background"> <span>{{mov.title}}' +
-         '<span class="minutes"><i>{{mov.duration}} minutes</i></span>' +
-         '<span class="language">{{mov.language}}</span> <br> </span>' +
-         '<span class="director_name"><b>{{mov.director}}</b></span>' +
-         '<span class="genre">{{mov.genre}}</span>' +
-         '<button type="button" class="delete btn btn-default btn-sm pull-right"' +
-         'ng-show="show" ng-click="del()">' +
-         '<span class="glyphicon glyphicon-trash"></span></button>' +
-         ' </div>'
+      templateUrl: 'MovieList/listDetailDirective.html'
    };
 }]);
 
