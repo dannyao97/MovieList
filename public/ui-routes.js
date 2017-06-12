@@ -25,6 +25,28 @@ app.config(['$stateProvider', '$urlRouterProvider',
          templateUrl: 'Register/register.template.html',
          controller: 'registerController'
       })
+      .state('usersOverview', {
+         url: '/Users',
+         templateUrl: 'MovieList/usersOverview.template.html',
+         controller: 'usersOverviewController',
+         resolve: {
+            userList: ['$q', '$http', function($q, $http) {
+               return $http.get('/Prss/all')
+                  .then(function(response) {
+                     return response.data;
+                  });
+               }]
+         }
+      })
+      .state('usersDetail', {
+         url: '/Users/:userId',
+         templateUrl: 'MovieList/usersDetail.template.html',
+         controller: 'usersDetailController',
+         params: {
+            userId: "",
+            user: ""
+         }
+      })
       .state('myListOverview', {
          url: '/myLists?owner',
          templateUrl: 'MovieList/myListOverview.template.html',

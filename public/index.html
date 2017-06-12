@@ -19,6 +19,8 @@
 <script src="MovieList/listOverviewController.js"></script>
 <script src="MovieList/listDetailController.js"></script>
 <script src="MovieList/myListOverviewController.js"></script>
+<script src="MovieList/usersOverviewController.js"></script>
+<script src="MovieList/usersDetailController.js"></script>
 <script src="ui-routes.js"></script>
 <script src="Util/notifyDlg.js"></script>
 <script src="Util/movieDlg.js"></script>
@@ -40,6 +42,9 @@
             <a ui-sref="myListOverview({owner: {{user.id}}})">
                My Lists
             </a>
+         </li>
+         <li ng-if="!!user">
+            <a ui-sref="usersOverview">Users</a>
          </li>
       </ul>
       <ul class="nav navbar pull-right">

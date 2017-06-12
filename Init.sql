@@ -43,6 +43,7 @@ create table Entry (
    movieId int not null,
    prsId int not null,
    whenAdded datetime not null,
+   unique key(listId, movieId),
    constraint FKEntry_movieId foreign key (movieId) references Movie(id)
     on delete cascade,
    constraint FKEntry_prsId foreign key (prsId) references Person(id)

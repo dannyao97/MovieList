@@ -41,6 +41,27 @@ router.get('/', function(req, res) {
    }
 });
 
+//Get all users
+router.get('/all', function(req, res) {
+   var vld = req.validator;
+   var cnn = req.cnn;
+
+   async.waterfall([
+   function(cb) {  // Check for existence of conversation
+      if (vld.checkPrsOK(req.session.id, cb)) {
+         cnn.chkQry('select id, firstName, lastName from Person where role = 0'
+          , [], cb);
+      }
+   },
+   function(qRes, fields, cb) {
+      res.status(200).json(qRes);
+      cb();
+   },
+   function(err){
+      cnn.release();
+   }]);
+});
+
 router.post('/', function(req, res) {
    var vld = req.validator;  // Shorthands
    var body = req.body;

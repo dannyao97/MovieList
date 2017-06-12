@@ -20,7 +20,7 @@ app.factory("movieDlg", ["$uibModal", "$http", function(uibM, $http) {
               scp.selectedMovies.splice(movIndex, 1);
            }
            else {
-              $http.post('/Lists/' + listId + "/Entry", {"movieId":mov.id});
+              //$http.post('/Lists/' + listId + "/Entry", {"movieId":mov.id});
               scp.selectedMovies.push(mov.id);
            }
          };
@@ -28,6 +28,17 @@ app.factory("movieDlg", ["$uibModal", "$http", function(uibM, $http) {
             templateUrl: 'Util/movieDlg.template.html',
             scope: scp,
             size: sz || 'lg'
+         }).closed.then(function(){
+            //Posting movies to Entry
+            scp.selectedMovies.forEach(function(mov) {
+               $http.post('/Lists/' + listId + "/Entry", {movieId: mov})
+               .then(function() {
+                  $http.get('/Lists/' + listId  + '/Entry')
+                  .then(function(response) {
+                     scp.movies = response.data;
+                  })
+               });
+            });
          }).result;
       }
    };

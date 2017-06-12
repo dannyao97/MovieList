@@ -83,3 +83,26 @@ app.directive('listDetail', [function() {
          '<span class="genre">{{mov.genre}}</span> </div>'
    }
 }]);
+
+app.directive('userSummary', [function() {
+   return {
+      restrict: 'E',
+      scope: {
+         user: "=toSummarize",
+         select: '&'
+      },
+      template: '<a  href="#" ui-sref="usersDetail({userId: {{user.id}}, ' +
+      'user: {{user}}})">{{user.firstName}} {{user.lastName}}</a>'
+   }
+}]);
+
+app.directive('userListDetail', [function() {
+   return {
+      restrict: 'E',
+      scope: {
+         entry: "=toSummarize"
+      },
+      template: '<a  href="#" ui-sref="listDetail({listId: {{entry.id}}})">' +
+      '{{entry.title}}</a>'
+   }
+}]);

@@ -7,11 +7,11 @@ app.controller('listDetailController', ['$scope', '$state', '$http',
    $http.get('/Lists/' + id)
    .then(function(response) {
       $scope.listTitle = response.data[0].title;
+      $scope.listOwner = response.data[0].ownerId;
    });
 
    $http.get('/Lists/' + id + '/Entry')
    .then(function(response) {
-      console.log(response);
       $scope.movies = response.data;
    })
    .catch(function(err) {

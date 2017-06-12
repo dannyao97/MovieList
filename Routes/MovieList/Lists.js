@@ -194,6 +194,7 @@ router.post('/:listId/Entry', function(req, res){
    var listId = req.params.listId;
    var body = req.body;
    var curTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+   var listOwner;
 
    async.waterfall([
    function(cb) {
@@ -203,6 +204,15 @@ router.post('/:listId/Entry', function(req, res){
    },
    function(movies, fields, cb) {
       if (vld.check(movies.length, Tags.notFound, null, cb)) {
+         listOwner = movies[0].ownerId;
+         cnn.chkQry('select * from Entry where listId = ? and movieId = ?',
+          [listId, body.movieId], cb);
+      }
+   },
+   function(exist, fields, cb) {
+      //Checks if the Entry already exists in the list
+      if (vld.check(listOwner === req.session.id, Tags.noPermission,
+       null, cb) && exist.length === 0) {
          cnn.chkQry('insert into Entry set ?',
          {
             listId: listId, prsId: req.session.id,
@@ -210,7 +220,7 @@ router.post('/:listId/Entry', function(req, res){
          }, cb);
       }
       res.header("Content-Length", 0);
-      res.location('/Lists/' + movies.insertId).end();
+      res.location('/Lists/' + exist.insertId).end();
    }],
    function(err) {
       cnn.release();
