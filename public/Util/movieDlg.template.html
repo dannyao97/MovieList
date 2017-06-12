@@ -2,17 +2,19 @@
     <h3 class="modal-title">{{hdr || "Note"}}</h3>
 </div>
 <div class = "modal-body">
-    <div style="display:inline; width:100%">
-        <input style="width:80%" type="text" ng-model="search">
-        <button type="button" class="btn btn-info"
-                ng-click="movieRefresh(search)">Search
-        </button>
-    </div>
-    <div ng-click="addMovie(mov)" class="list-group-item"
-         ng-repeat="mov in searchMovies"
-         ng-class="{selected: selectedMovies.indexOf(mov.id) >= 0}">
-        <list-detail mov="mov"></list-detail>
-    </div>
+   <div style="display:inline; width:100%">
+      <input style="width:80%" type="text" ng-model="search">
+         <button type="button" class="btn btn-info"
+          ng-click="movieRefresh(search)">
+            Search
+         </button>
+      </input>
+   </div>
+   <div ng-click="addMovie(mov)" class="list-group-item"
+    ng-repeat="mov in searchMovies"
+    ng-class="{selected: selectedMovies.indexOf(mov.id) >= 0}">
+       <list-detail mov="mov"></list-detail>
+   </div>
 </div>
 <div class="modal-footer">
    <span ng-repeat="btn in buttons">

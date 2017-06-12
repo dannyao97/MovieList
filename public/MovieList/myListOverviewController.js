@@ -27,8 +27,8 @@ app.controller('myListOverviewController', ['$scope', '$state', '$http',
          .catch(function(err) {
             // console.log("Error: " + JSON.stringify(err));
             if (err && err.data && err.data[0].tag === "dupTitle")
-               nDlg.show($scope, "Another conversation already has title "
-                  + selectedTitle, "Error");
+               nDlg.show($scope, "Another conversation already has title " +
+                selectedTitle, "Error");
          });
    };
 
@@ -71,8 +71,8 @@ app.controller('myListOverviewController', ['$scope', '$state', '$http',
          .catch(function(err) {
             // console.log("Error: " + JSON.stringify(err));
             if (err && err.data && err.data[0].tag === "dupTitle")
-               nDlg.show($scope, "Another conversation already has title "
-                  + selectedTitle, "Error");
+               nDlg.show($scope, "Another conversation already has title " +
+                selectedTitle, "Error");
          });
    };
  }]);

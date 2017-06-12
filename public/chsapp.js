@@ -84,7 +84,7 @@ app.directive('userSummary', [function() {
       },
       template: '<a  href="#" ui-sref="usersDetail({userId: {{user.id}}, ' +
       'user: {{user}}})">{{user.firstName}} {{user.lastName}}</a>'
-   }
+   };
 }]);
 
 app.directive('userListDetail', [function() {
@@ -95,5 +95,5 @@ app.directive('userListDetail', [function() {
       },
       template: '<a  href="#" ui-sref="listDetail({listId: {{entry.id}}})">' +
       '{{entry.title}}</a>'
-   }
+   };
 }]);

@@ -14,11 +14,12 @@ router.get('/', function(req, res) {
    function(cb) {
       if (vld.checkPrsOK(req.session.id, cb)) {
          if (qOwnerId) {
-            req.cnn.chkQry('select id, title from MovieList where ownerId = ?'
-             , [qOwnerId], cb);
+            req.cnn.chkQry('select id, title from MovieList where ownerId = ?',
+             [qOwnerId], cb);
          }
          else {
-            req.cnn.chkQry('select id, title, ownerId from MovieList', null, cb);
+            req.cnn.chkQry('select id, title, ownerId from MovieList', null,
+             cb);
          }
       }
    },
@@ -157,9 +158,10 @@ router.get('/:listId/Entry', function(req, res) {
    var vld = req.validator;
    var listId = req.params.listId;
    var cnn = req.cnn;
-   var query = 'select Entry.id as entryId, mov.genre, mov.title, mov.duration,' +
-    ' mov.director, mov.id as movieId, mov.movieLink, mov.language from Entry, Movie' +
-    ' mov where Entry.movieId = mov.id and Entry.listId = ?';
+   var query = 'select Entry.id as entryId, mov.genre, mov.title, ' +
+    'mov.duration, mov.director, mov.id as movieId, mov.movieLink, ' +
+    'mov.language from Entry, Movie mov where Entry.movieId = mov.id ' +
+    'and Entry.listId = ?';
    var params = [parseInt(listId)];
 
    // And finally add a limit clause and parameter if indicated.

@@ -19,7 +19,6 @@ app.factory("movieDlg", ["$uibModal", "$http", function(uibM, $http) {
               scp.selectedMovies.splice(movIndex, 1);
            }
            else {
-              //$http.post('/Lists/' + listId + "/Entry", {"movieId":mov.id});
               scp.selectedMovies.push(mov.id);
            }
          };

@@ -42,7 +42,7 @@ app.controller('listDetailController', ['$scope', '$state', '$http',
       var entryId = movie.entryId;
 
       nDlg.show($scope, "Are you sure you want to delete this movie?",
-         "Delete Movie Entry", ["Yes", "No"])
+       "Delete Movie Entry", ["Yes", "No"])
       .then(function(btn) {
          if (btn === "Yes")
             return $http.delete("/Entry/" + entryId);

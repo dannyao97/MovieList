@@ -1,7 +1,8 @@
 <h2 style="padding-left: 15px">{{listTitle}}</h2>
 <div class="list-group">
    <div class="list-group-item" ng-repeat="mov in movies">
-      <list-detail mov="mov" show="user.id === listOwner" del="delEntry($index)"></list-detail>
+      <list-detail mov="mov" show="user.id === listOwner"
+       del="delEntry($index)"></list-detail>
    </div>
 </div>
 
