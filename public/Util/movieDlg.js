@@ -7,7 +7,6 @@ app.factory("movieDlg", ["$uibModal", "$http", function(uibM, $http) {
          scp.buttons = btns || ['OK'];
          scp.selectedMovies = [];
          scp.movieRefresh = function(search){
-            console.log(search);
             $http.get('/Movies?movie=' + search)
             .then(function(response){
                scp.searchMovies = response.data;

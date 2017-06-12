@@ -18,7 +18,7 @@ app.controller('listDetailController', ['$scope', '$state', '$http',
       $scope.movies = null;
    });
 
-    $scope.newMsg = function() {
+    $scope.newEntry = function() {
        $http.get('/Movies?num=10')
        .then(function(response) {
           return movieDlg.show($scope, response.data,"Add Movie", id);
@@ -33,7 +33,7 @@ app.controller('listDetailController', ['$scope', '$state', '$http',
           $http.get('/Lists/' + id  + '/Entry')
           .then(function(response) {
              $scope.movies = response.data;
-          })
+          });
        });
     };
 }]);

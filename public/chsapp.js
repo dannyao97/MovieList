@@ -81,7 +81,7 @@ app.directive('listDetail', [function() {
          '<span class="language">{{mov.language}}</span> <br> </span>' +
          '<span class="director_name"><b>{{mov.director}}</b></span>' +
          '<span class="genre">{{mov.genre}}</span> </div>'
-   }
+   };
 }]);
 
 app.directive('userSummary', [function() {
