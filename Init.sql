@@ -16,6 +16,8 @@ create table Person (
 
 insert into Person (firstName, lastName, email,       password,   whenRegistered, role)
             VALUES ("Joe",     "Admin", "adm@11.com", "password", NOW(), 1);
+insert into Person (firstName, lastName, email,       password,   whenRegistered, role)
+            VALUES ("John",    "User",  "temp@email.com", "password", NOW(), 0);
 
 
 create table MovieList (
